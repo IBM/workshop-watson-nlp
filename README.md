@@ -1,5 +1,7 @@
 # Advocacy Workshop
 
+> NOTE!  This is being converted from Gitbook to mkdocs. Below you will find historical facts and lies.
+
 This is a template for workshops hosted on Gitbook. To view it online, go to:
 
 <https://ibm-developer.gitbook.io/workshop-template/>
