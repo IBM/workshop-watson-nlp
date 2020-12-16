@@ -13,9 +13,8 @@ nav:
   - Welcome:
     - About the workshop: README.md
     - Create an IBM Cloud Account: pre-work/GET_STARTED.md
-    - Access the IBM Cloud Shell: pre-work/CLOUD_SHELL.md
   - Workshop:
-    - Lab 1. Deploy a Node app with Source-to-Image: exercise-01/README.md
+    - Lab 1. Create an app to perform intelligent searches: docs/create-an-app-to-perform-intelligent-searches-on-data/index.md
     - Lab 2. Logging and monitoring: exercise-02/README.md
     - Lab 3. Metrics and dashboards: exercise-03/README.md
     - Lab 4. Scaling the application: exercise-04/README.md
