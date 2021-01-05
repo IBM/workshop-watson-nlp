@@ -1,0 +1,808 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="IBM Developer">
+      
+      
+        <link rel="canonical" href="https://ibm.github.io/workshop-watson-nlp/watson-discovery/analyze-and-answer-policy-questions-with-smart-document-understanding/nl/zh/">
+      
+      <link rel="shortcut icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.2.3">
+    
+    
+      
+        <title>通过 Smart Document Understanding 来处理、理解和回答保单问题 - Watson NLP Discovery Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.3b61ea93.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.39b8e14a.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,400i,700%7CIBM+Plex+Mono&display=fallback">
+        <style>body,input{font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"IBM Plex Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#watson-discovery" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="https://ibm.github.io/workshop-watson-nlp" title="Watson NLP Discovery Workshop" class="md-header-nav__button md-logo" aria-label="Watson NLP Discovery Workshop">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      <div class="md-header-nav__ellipsis">
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            Watson NLP Discovery Workshop
+          </span>
+        </div>
+        <div class="md-header-nav__topic">
+          <span class="md-ellipsis">
+            
+              通过 Smart Document Understanding 来处理、理解和回答保单问题
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header-nav__source">
+        
+<a href="https://github.com/ibm/workshop-watson-nlp/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    workshop-watson-nlp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        Welcome
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../create-an-app-to-perform-intelligent-searches-on-data/" class="md-tabs__link">
+        Workshop
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../pre-work/SETUP_CLI.md" class="md-tabs__link">
+        Extra Material
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../resources/README.md" class="md-tabs__link">
+        References
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://ibm.github.io/workshop-watson-nlp" title="Watson NLP Discovery Workshop" class="md-nav__button md-logo" aria-label="Watson NLP Discovery Workshop">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Watson NLP Discovery Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/ibm/workshop-watson-nlp/" title="Go to repository" class="md-source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 00-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 01-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 000 40.81l195.61 195.6a28.86 28.86 0 0040.8 0l194.69-194.69a28.86 28.86 0 000-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    workshop-watson-nlp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-1" type="checkbox" id="nav-1" >
+    
+    <label class="md-nav__link" for="nav-1">
+      Welcome
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Welcome" data-md-level="1">
+      <label class="md-nav__title" for="nav-1">
+        <span class="md-nav__icon md-icon"></span>
+        Welcome
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../.." class="md-nav__link">
+      About the workshop
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../../pre-work/GET_STARTED.md" class="md-nav__link">
+      Create an IBM Cloud Account
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" >
+    
+    <label class="md-nav__link" for="nav-2">
+      Workshop
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Workshop" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Workshop
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../create-an-app-to-perform-intelligent-searches-on-data/" class="md-nav__link">
+      Lab 1. Create an app to perform intelligent searches
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../" class="md-nav__link">
+      Lab 2. Smart Document Understanding
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../build-a-recommendation-engine-with-watson-natural-language-understanding/" class="md-nav__link">
+      Lab 3. Custom Domain Language Understanding
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+    
+    <label class="md-nav__link" for="nav-3">
+      Extra Material
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Extra Material" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Extra Material
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../../pre-work/SETUP_CLI.md" class="md-nav__link">
+      Setup OC CLI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    
+    <label class="md-nav__link" for="nav-4">
+      References
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="References" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        References
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../../resources/README.md" class="md-nav__link">
+      Additional resources
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../../../../99-faq/README.md" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#watson-discovery" class="md-nav__link">
+    创建 Watson Discovery 服务实例
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    上传数据
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#smart-document-understanding" class="md-nav__link">
+    使用 Smart Document Understanding 为文档添加注释
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    管理文档中的字段
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#watson" class="md-nav__link">
+    用自然语言询问 Watson
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#watson-discovery_1" class="md-nav__link">
+    在应用程序中集成 Watson Discovery
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/ibm/workshop-watson-nlp/edit/master/docs/watson-discovery/analyze-and-answer-policy-questions-with-smart-document-understanding/nl/zh/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>通过 Smart Document Understanding 来处理、理解和回答保单问题</h1>
+                
+                <p>本教程将提供有关使用 IBM&reg; Watson&trade; Discovery 的分步指导，这是一种 AI 搜索技术，它利用自然语言处理、机器学习和异常检测方面的创新来使您能够更快、更准确地对业务文档建立索引并揭示答案。</p>
+<p>本教程将使用一个样本保险文件，提取其中的内容，然后通过 Watson Discovery 中内置的注解工具以使用特定业务文档的不同部分来训练 Watson。这样，您就可以分解文档，省略其中的某些部分并提高查询准确性。结合使用 Watson Discovery 和聊天机器人，可以回答以前需要人工接线员才能回答的复杂问题。这种复杂的问答系统不仅减轻了团队的工作量，而且还能快速提供答案，而无需等待正常电话呼叫可能产生的等待时间，从而改善了客户体验。</p>
+<p>本教程的目的是提取文档，询问 Watson，并直接从文档中获取以下问题的答案。我们需要回答以下问题：</p>
+<ul>
+<li>
+<p>我的保险涵盖玻璃维修吗？</p>
+<p><img alt="玻璃" src="https://media.github.ibm.com/user/79254/files/c9d0e900-95cc-11ea-90f0-c5e1b695c5ff" /></p>
+</li>
+<li>
+<p>我的保险涵盖医疗费用吗？</p>
+<p><img alt="医疗" src="https://media.github.ibm.com/user/79254/files/c76e8f00-95cc-11ea-9529-c61795dd0e57" /></p>
+</li>
+<li>
+<p>我的保险涵盖车辆损坏吗？</p>
+<p><img alt="损坏" src="https://media.github.ibm.com/user/79254/files/ca697f80-95cc-11ea-833a-1de304dcb344" /></p>
+</li>
+</ul>
+<p>本教程分为四个主要步骤。</p>
+<ol>
+<li>创建一个 IBM Cloud 帐户和一个 Watson Discovery 实例。</li>
+<li>创建一个集合，然后将文档上传到 Watson Discovery。</li>
+<li>使用用例训练 Watson Discovery。在此示例中，我使用一家保险公司的数据训练了 Watson Discovery，使其可以回答有关客户保单以及该保单涵盖范围的问题。</li>
+<li>通过用自然语言提问来测试模型。</li>
+</ol>
+<p>完成本教程后，您将了解如何使用 Watson Discovery 来根据用于馈入和训练 Watson 的文档快速注释、分析和回答复杂问题。您还将了解如何通过使用相关性训练来提高准确性，并了解如何从文档中提取有用的信息（例如关键字、位置、实体和情绪分析）。</p>
+<p>首先，必须创建一个 <a href="https://cocl.us/IBM_CLOUD_GCG">IBM Cloud 帐户</a>。在本教程中，您不需要使用信用卡，并且您的 IBM Cloud 帐户和 Watson Discovery 服务都是免费的。</p>
+<p>以下屏幕录像显示了如何创建 Watson Discovery 实例以及如何使用应用程序界面来上传、扩充和查询数据。</p>
+<h2 id="watson-discovery">创建 Watson Discovery 服务实例<a class="headerlink" href="#watson-discovery" title="Permanent link">&para;</a></h2>
+<ol>
+<li>登录到您的 IBM Cloud 帐户。登录后，将转到 <code>cloud.ibm.com</code> 页面。</li>
+<li>在顶部搜索栏中搜索 <strong>Discovery</strong>，然后在 <strong>Catalog Results</strong> 下单击 <strong>Discovery</strong>。</li>
+<li>在 Watson Discovery 页面上，输入名称，然后选择服务的定价级别和位置。</li>
+<li>选择 Lite 级别（免费级别），然后选择所需的位置。为该服务指定一个易于识别的名称。我指定的名称为 <code>Discovery-zz</code>。</li>
+<li>
+<p>单击 <strong>Create</strong>。</p>
+<p><img alt="创建实例" src="../../images/image1.gif" /></p>
+</li>
+<li>
+<p>通过单击屏幕左上角的 <strong>IBM Cloud</strong> 以返回到 <code>cloud.ibm.com</code> 页面。</p>
+</li>
+<li>
+<p>在 <strong>Dashboard</strong> 下单击 <strong>Services</strong>，然后单击 <strong>Resource Summary</strong>。这会转到 <code>cloud.ibm.com/resources</code>。</p>
+</li>
+<li>
+<p>在 <strong>Resource List &gt; Services</strong> 下，您将看到该 Watson Discovery 实例以及您在先前步骤中指定的名称。单击该实例。这会在 IBM Cloud 中转到该实例。在这里，您可以看到 API 密钥以及其他详细信息。</p>
+</li>
+<li>
+<p>单击 <strong>Launch Watson Discovery</strong>。</p>
+<p>这会转到 Watson Discovery 服务主页，您可以在其中管理数据。您还可以在其中上传要分析的文档和数据。</p>
+<p><img alt="https://media.github.ibm.com/user/79254/files/54201880-8950-11ea-909f-cc9b771fd446" src="../../images/image2.gif" /></p>
+</li>
+</ol>
+<h2 id="_1">上传数据<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>从 Watson Discovery 的主页中，单击 <strong>Upload your own data</strong>。</p>
+</li>
+<li>
+<p>单击 sample-insurance.docx 文件，这是要用于训练 Watson Discovery 的样本保险文件。这个文件位于 <a href="https://github.com/IBM/virtual-insurance-assistant/blob/master/data/discovery/sample-insurance.docx">https://github.com/IBM/virtual-insurance-assistant/blob/master/data/discovery/sample-insurance.docx</a>。</p>
+</li>
+<li>
+<p>上传完该文档后，您会在左上角的 Overview 选项卡中看到一个文档。您应该会看到情绪分析、实体提取和概念标记功能，这些功能是在您上传文档期间执行的。</p>
+<p><img alt="https://media.github.ibm.com/user/79254/files/54201880-8950-11ea-909f-cc9b771fd446" src="../../images/image3.gif" /></p>
+</li>
+</ol>
+<h2 id="smart-document-understanding">使用 Smart Document Understanding 为文档添加注释<a class="headerlink" href="#smart-document-understanding" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>从 Watson Discovery 的 Overview 页面中，单击 <strong>Configure data</strong>。</p>
+</li>
+<li>
+<p>这会转到 Smart Document Understanding 注解工具。右侧窗格显示可用于标记文档的标签。请注意，要创建自定义标签，您必须升级到 Watson Discovery 的付费版本。</p>
+</li>
+<li>
+<p>单击纸张图标（在放大镜旁边）。这会转到单页视图。接下来，我使用 <code>Title</code> 字段来标记标题（即 <code>Section 1</code>），并使用 <code>subtitle</code> 字段突出显示页面上的副标题（即标题下的句子）。完成后，单击 <strong>Submit page</strong>。</p>
+<p>这样做是为了在以后向 Watson Discovery 询问保险是否涵盖玻璃或医疗费用时，Watson Discovery 可以直接使用文档中的此文本进行回答。</p>
+<p><img alt="part1Annotate" src="../../images/image4.gif" /></p>
+<p>您会发现左下角显示 <code>Viewing: Live predictions of lastest ML-model</code>。这意味着，每次提交页面时，您都是在使用文档格式训练 Watson Discovery。您应该会看到，对于第 4 页，Watson Discovery 自动开始将字体较大的节标题识别为 <code>Title</code> 字段，然后将标题下的句子识别为 <code>subtitle</code>，这样做是正确的。在这种情况下，您只需单击 <code>Submit</code> 即可。 </p>
+<p>由于您要向 Watson 传达文档中正确的字段，因此您正在进行有监督的机器学习。在学习过程中，您需要监督 Watson Discovery。</p>
+</li>
+<li>
+<p>重复此过程，直至到达最后一页（第 5 页）。</p>
+</li>
+</ol>
+<p><img alt="第 2 部分" src="../../images/image5.gif" /></p>
+<h2 id="_2">管理文档中的字段<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>在为所有页面添加注释后，单击 <strong>Manage fields</strong>。</p>
+</li>
+<li>
+<p>单击 <strong>Split document on each occurrence of</strong>，然后选择 <strong>subtitle</strong>，以便按副标题拆分文档。</p>
+</li>
+<li>
+<p>单击 <strong>Apply changes to collection</strong>，然后将更改内容添加到您上传的 <code>sample-insurance.docx</code> 文件中。</p>
+</li>
+</ol>
+<p>完成上传操作后，将转到 Overview 页面。刷新浏览器，可以看到 Watson Discovery 正在拆分文档。Watson Discovery 完成操作后，您应该有 10 多个文档。这是因为您已根据副标题将原始文档拆分为多个较小的文档。这使 Watson Discovery 可以更容易地检索特定问题的答案，并使您能够实现更准确的扩充，例如情绪分析。</p>
+<p><img alt="第 3 部分" src="../../images/image6.gif" /></p>
+<h2 id="watson">用自然语言询问 Watson<a class="headerlink" href="#watson" title="Permanent link">&para;</a></h2>
+<p>Watson 的主要优点之一是能够用自然语言回答文档中的问题。在执行此操作之前，必须将 Watson 配置为直接使用从保险文件中分析出的文本来回答问题。</p>
+<ol>
+<li>
+<p>单击侧边栏中的放大镜图标。然后单击 <strong>More options</strong>。</p>
+</li>
+<li>
+<p>在 <strong>Passages</strong> 下，针对 <strong>Include relevant passages</strong> 选择 <strong>No</strong>。</p>
+</li>
+<li>
+<p>在 <strong>Fields to return</strong> 的 <strong>Documents</strong> 下，选择 <strong>text</strong>。</p>
+</li>
+<li>
+<p>针对 <strong>Number of documents to return</strong> 选择 <strong>3</strong>。</p>
+</li>
+<li>
+<p>滚动到页面顶部，然后在 <strong>Search for documents</strong> 下，确保已选中 <strong>Use natural language</strong>。然后，向 Watson 询问以下问题：“Does my insurance cover glass repairs?（我的保险涵盖玻璃维修吗？）"单击 <strong>Run query</strong>。</p>
+</li>
+<li>
+<p>返回答案后，Summary 处于选中状态。单击 <strong>JSON</strong>。</p>
+</li>
+</ol>
+<p>您应该会看到 Watson 从文档中提取相关文本，内容大概是，如果车辆丢失或损坏，保险公司将支付更换或修理车辆的挡风玻璃、天窗或窗户上的玻璃的费用。</p>
+<p>接下来，针对“Does my insurance cover medical expenses?（我的保险涵盖医疗费用吗？）”和“Does my insurance cover damage to my vehicle?（我的保险涵盖车辆损坏吗？）”重复以上过程。</p>
+<p>您应该会看到已从样本保险文件中检索到相关文本。可以在您的聊天机器人应用程序中直接使用此 JSON，以便 Watson 可以根据您的训练材料回答更复杂的问题。</p>
+<p><img alt="第 4 部分" src="../../images/image7.gif" /></p>
+<h2 id="watson-discovery_1">在应用程序中集成 Watson Discovery<a class="headerlink" href="#watson-discovery_1" title="Permanent link">&para;</a></h2>
+<p>现在，您已经了解了如何使用 Watson Discovery，您可能希望在自己的应用程序中使用 Watson Discovery。一种常见的模式是使用聊天机器人，然后使用 Webhook 触发聊天机器人搜索答案。此外，如果您想使用 Watson Discovery 随附的自然语言处理功能，请查看使用 <a href="https://github.com/watson-developer-cloud/node-sdk">Watson Node SDK</a> 或<a href="https://github.com/watson-developer-cloud">任何其他 Watson SDK</a> 的示例。</p>
+<p>如您所见，Watson Discovery 提供了内置的情绪分析、实体提取、概念标记以及其他丰富的功能，您可以在单击 <strong>Configure data</strong> 时选择这些功能。Watson Discovery 的基本要求是“Learning With Less”（简化学习）。您已经看到在 4 到 5 页的训练材料中，Watson Discovery 能够轻松地从文档中提取副标题和文本。</p>
+<p>本教程是<a href="https://developer.ibm.com/zh/articles/insurance-industry-customer-care-solution">构建客户服务</a>解决方案的一部分，可帮助客户管理保险索赔并获取汽车服务信息。</p>
+<p>本文翻译自：<a href="https://developer.ibm.com/tutorials/analyze-and-answer-policy-questions-with-smart-document-understanding/">Process, understand, and answer policy questions with smart document understanding</a>（2020-05-21）</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2020 IBM Developer
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/ibm" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://twitter.com/ibmdeveloper" target="_blank" rel="noopener" title="twitter.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.linkedin.com/company/ibm/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://www.youtube.com/user/developerworks" target="_blank" rel="noopener" title="www.youtube.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://dev.to/ibmdeveloper" target="_blank" rel="noopener" title="dev.to" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120.12 208.29c-3.88-2.9-7.77-4.35-11.65-4.35H91.03v104.47h17.45c3.88 0 7.77-1.45 11.65-4.35 3.88-2.9 5.82-7.25 5.82-13.06v-69.65c-.01-5.8-1.96-10.16-5.83-13.06zM404.1 32H43.9C19.7 32 .06 51.59 0 75.8v360.4C.06 460.41 19.7 480 43.9 480h360.2c24.21 0 43.84-19.59 43.9-43.8V75.8c-.06-24.21-19.7-43.8-43.9-43.8zM154.2 291.19c0 18.81-11.61 47.31-48.36 47.25h-46.4V172.98h47.38c35.44 0 47.36 28.46 47.37 47.28l.01 70.93zm100.68-88.66H201.6v38.42h32.57v29.57H201.6v38.41h53.29v29.57h-62.18c-11.16.29-20.44-8.53-20.72-19.69V193.7c-.27-11.15 8.56-20.41 19.71-20.69h63.19l-.01 29.52zm103.64 115.29c-13.2 30.75-36.85 24.63-47.44 0l-38.53-144.8h32.57l29.71 113.72 29.57-113.72h32.58l-38.46 144.8z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../../assets/javascripts/vendor.08c56446.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.6ced434e.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../../..",
+          features: ['navigation.tabs'],
+          search: Object.assign({
+            worker: "../../../../assets/javascripts/worker/search.8c7e0a7e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
